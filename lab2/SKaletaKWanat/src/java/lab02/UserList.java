@@ -7,13 +7,10 @@ package lab02;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 
-/**
- *
- * @author vegor
- */
-@Stateful
+
+@Stateless
 public class UserList implements IUserList {
     private List<User> userList;
     public UserList()
@@ -25,16 +22,39 @@ public class UserList implements IUserList {
         userList.add(new User("michal", "michal"));
     }
     
+    @Override
     public List<User> getUsers()
     {
         return userList;
     }
     
-    public void addUser(User usr)
+    @Override
+    public boolean addUser(User user)
     {
-        userList.add(usr);
+        User usr = findUser(user.getLogin());
+        
+        if(usr == null)
+        {
+            userList.add(usr);
+            return true;
+        }
+        return false;
     }
     
+    @Override
+    public User findUser(String login)
+    {
+        for(User usr: userList)
+        {
+            if(usr.getLogin() == null ? login == null : usr.getLogin().equals(login))
+            {
+                return usr;
+            }
+        }
+        return null;
+    }
+    
+    @Override
     public boolean removeUser(String login)
     {
          for(User usr: userList)
@@ -47,6 +67,4 @@ public class UserList implements IUserList {
         }
          return false;
     }
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

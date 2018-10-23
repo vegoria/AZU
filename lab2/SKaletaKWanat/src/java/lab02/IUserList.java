@@ -11,6 +11,7 @@ import javax.ejb.Remote;
 @Remote
 public interface IUserList {
     public List<User> getUsers();
-    public void addUser(User usr);
+    public boolean addUser(User usr);
     public boolean removeUser(String login);
+    public User findUser(String login);
 }
