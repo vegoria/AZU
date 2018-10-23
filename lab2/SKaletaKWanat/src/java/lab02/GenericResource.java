@@ -7,6 +7,8 @@ package lab02;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -21,21 +23,19 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/my_app")
 public class GenericResource {
-    private List<User> userList;
+    private IUserList userListContainer;
     @Context
     private UriInfo context;
 
-    public GenericResource() {
-        userList = new ArrayList<>();
-        userList.add(new User("anna", "anna"));
-        userList.add(new User("ola", "ola"));
-        userList.add(new User("maciek", "maciek"));
-        userList.add(new User("michal", "michal"));
+    public GenericResource() throws NamingException {
+        InitialContext ctx = new InitialContext();
+        userListContainer = (IUserList)ctx.lookup("UserList/Remote");
     }
 
     @GET
     @Path("/users")
     public String getUsersList() {
+        List<User> userList = userListContainer.getUsers();
         StringBuilder sb = new StringBuilder();
         for(User usr: userList)
         {
@@ -49,6 +49,7 @@ public class GenericResource {
     @Path("/users/{login}")
     public String checkIfUserExist(@PathParam("login") String pLogin) {
         boolean userExist = false;
+        List<User> userList = userListContainer.getUsers();
         for(User usr: userList)
         {
             if(usr.getLogin() == null ? pLogin == null : usr.getLogin().equals(pLogin))
@@ -68,12 +69,13 @@ public class GenericResource {
     @Path("/users")
     public void createUser(String req) {
         String[] parts = req.split("\n");
-        userList.add(new User(parts[0], parts[1]));
+        userListContainer.addUser(new User(parts[0], parts[1]));
     }
     
     @PUT
     @Path("/users/{login}")
     public String setNewPasswdForUser(@PathParam("login") String pLogin) {
+        List<User> userList = userListContainer.getUsers();
         for(User usr: userList)
         {
             if(usr.getLogin() == null ? pLogin == null : usr.getLogin().equals(pLogin))
@@ -89,13 +91,6 @@ public class GenericResource {
     @DELETE
     @Path("/users/{login}")
     public void deleteUser(@PathParam("login") String pLogin) {
-        for(User usr: userList)
-        {
-            if(usr.getLogin() == null ? pLogin == null : usr.getLogin().equals(pLogin))
-            {
-                userList.remove(usr);
-                break;
-            }
-        }
+       userListContainer.removeUser(pLogin);
     }
 }
