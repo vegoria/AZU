@@ -35,7 +35,7 @@ public class UserList implements IUserList {
         
         if(usr == null)
         {
-            userList.add(usr);
+            userList.add(user);
             return true;
         }
         return false;

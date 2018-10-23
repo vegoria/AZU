@@ -33,14 +33,62 @@ public class GenericResource {
     @Context
     private UriInfo context;
 
-    public GenericResource() throws NamingException {
+    public GenericResource()
+    {
+        
+    }
+    
+    private void sortUsers(List<User> userList, boolean descOrder)
+    {
+        Collections.sort(userList, new Comparator<User>() {
+                @Override
+                public int compare(User lhs, User rhs) {
+                return lhs.getLogin().compareTo(rhs.getLogin());
+                }
+                });
+        if(descOrder)
+        {
+            Collections.reverse(userList);
+        }
+    }
+    
+    private void getUserToDisplay(int page, int count, List<User> userList, List<User> listToDisplay)
+    {
+        int currPage = 1;
+        int currCount = 0;
+        for(User usr: userList)
+        {
+            if(currPage==page)
+            {
+                listToDisplay.add(usr);
+            }
+            currCount++;
+            if(currCount == count)
+            {
+                currPage++;
+                currCount=0;
+            }
+            if(currPage>page) break;
+        }
+    }
+    
+    private StringBuilder getStringBuilder(List<User> userList)
+    {
+        StringBuilder sb = new StringBuilder();
+        for(User usr: userList)
+        {
+            sb.append(usr.toString());
+            sb.append("\n");
+        }
+        return sb;
     }
     
     @GET
     @Consumes({"text/plain"})
     @Produces({"text/plain"})
     @Path("/users")
-    public Response getUsersList(@QueryParam("sortBy") String sortBy,
+    public Response getUsersList(
+            @QueryParam("sortBy") String sortBy,
             @QueryParam("sortDir") String sortDir,
             @QueryParam("page") String page,
             @QueryParam("count") String count)
@@ -48,57 +96,37 @@ public class GenericResource {
         List<User> userList = userListContainer.getUsers();
         List<User> listToDisplay = new ArrayList<>();
         int pageNumber = 0;
+        boolean descending = false;
+        boolean limitedView = false;
+        if(sortDir != null)
+        {
+            if(sortDir.equals("desc")) descending=true;
+        }
+        
         if(sortBy != null)
         {
             if(sortBy.equals("login"))
             {
-                Collections.sort(userList, new Comparator<User>() {
-                @Override
-                public int compare(User lhs, User rhs) {
-                return lhs.getLogin().compareTo(rhs.getLogin());
-                }
-            });
+                sortUsers(userList, descending);
             }
         }
-        if(sortDir != null)
-        {
-            if(sortDir.equals("desc"))
-                Collections.reverse(userList);
-        }
+        
         int status = 200;
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb;
         if(page != null? count != null: false)
         {
-            int countInt = Integer.parseInt(count);
-            int pageInt = Integer.parseInt(page);
-            int currPage = 1;
-            int currCount = 0;
-            for(User usr: userList)
-            {
-                if(currPage==pageInt)
-                {
-                    listToDisplay.add(usr);
-                }
-                currCount++;
-                if(currCount == countInt)
-                {
-                    currPage++;
-                    currCount=0;
-                }
-                if(currPage>pageInt) break;
-            }
-            for(User usr: listToDisplay)
-            {
-                sb.append(usr.toString());
-                sb.append("\n");
-            }
+            limitedView = true;
+            getUserToDisplay(Integer.parseInt(page), Integer.parseInt(count), userList, listToDisplay);
         }
-        else{
-        for(User usr: userList)
+        if(limitedView)
         {
-            sb.append(usr.toString());
-            sb.append("\n");
-        }}
+            sb = getStringBuilder(listToDisplay);
+        }
+        else
+        {
+            sb = getStringBuilder(userList);
+        }
+        
         return Response.status(status).entity(sb.toString()).build();
     }
 
