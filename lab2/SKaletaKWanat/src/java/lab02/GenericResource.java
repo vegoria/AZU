@@ -6,6 +6,8 @@
 package lab02;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
@@ -20,6 +22,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -37,15 +40,65 @@ public class GenericResource {
     @Consumes({"text/plain"})
     @Produces({"text/plain"})
     @Path("/users")
-    public Response getUsersList() {
+    public Response getUsersList(@QueryParam("sortBy") String sortBy,
+            @QueryParam("sortDir") String sortDir,
+            @QueryParam("page") String page,
+            @QueryParam("count") String count)
+    {
         List<User> userList = userListContainer.getUsers();
+        List<User> listToDisplay = new ArrayList<>();
+        int pageNumber = 0;
+        if(sortBy != null)
+        {
+            if(sortBy.equals("login"))
+            {
+                Collections.sort(userList, new Comparator<User>() {
+                @Override
+                public int compare(User lhs, User rhs) {
+                return lhs.getLogin().compareTo(rhs.getLogin());
+                }
+            });
+            }
+        }
+        if(sortDir != null)
+        {
+            if(sortDir.equals("desc"))
+                Collections.reverse(userList);
+        }
         int status = 200;
         StringBuilder sb = new StringBuilder();
+        if(page != null? count != null: false)
+        {
+            int countInt = Integer.parseInt(count);
+            int pageInt = Integer.parseInt(page);
+            int currPage = 1;
+            int currCount = 0;
+            for(User usr: userList)
+            {
+                if(currPage==pageInt)
+                {
+                    listToDisplay.add(usr);
+                }
+                currCount++;
+                if(currCount == countInt)
+                {
+                    currPage++;
+                    currCount=0;
+                }
+                if(currPage>pageInt) break;
+            }
+            for(User usr: listToDisplay)
+            {
+                sb.append(usr.toString());
+                sb.append("\n");
+            }
+        }
+        else{
         for(User usr: userList)
         {
             sb.append(usr.toString());
             sb.append("\n");
-        }
+        }}
         return Response.status(status).entity(sb.toString()).build();
     }
 
