@@ -8,8 +8,17 @@ package lab02;
 public class User {
     public User(String login, String paswd)
     {
+        this.session="0";
         this.login = login;
         this.password = paswd;
+    }
+
+    public String getSession() {
+        return session;
+    }
+
+    public void setSession(String session) {
+        this.session = session;
     }
     
     public String getLogin() {
@@ -33,7 +42,7 @@ public class User {
     {
         return this.login;
     }
-    
+    private String session;
     private String password;
     private String login;   
 }

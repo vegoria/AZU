@@ -67,4 +67,14 @@ public class UserList implements IUserList {
         }
          return false;
     }
+    @Override
+    public void setSession(String login, String session){
+        for(User usr: userList)
+        {
+            if(usr.getLogin() == null ? login == null : usr.getLogin().equals(login))
+            {
+                usr.setSession(session);
+            }
+        }
+    }
 }

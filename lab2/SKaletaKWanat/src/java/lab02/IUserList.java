@@ -14,4 +14,5 @@ public interface IUserList {
     public boolean addUser(User usr);
     public boolean removeUser(String login);
     public User findUser(String login);
+    public void setSession(String login, String session);
 }

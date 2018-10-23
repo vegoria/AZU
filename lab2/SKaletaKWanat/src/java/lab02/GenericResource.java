@@ -5,6 +5,7 @@
  */
 package lab02;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,7 +25,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 @Path("/my_app")
@@ -149,6 +153,82 @@ public class GenericResource {
             return Response.status(status).entity("Uzytkownik istnieje").build();
         }
         return Response.status(status).entity("Brak uzytkownika").build();
+    }
+     @GET
+    @Path("/login")
+    public Response checkIfUserLogged(@CookieParam("name") Cookie cookie) {
+         int status = 200;
+        if (cookie == null) {
+        return Response.status(status).entity("Brak cookie").build();
+    } else {
+        List<User> userList = userListContainer.getUsers();
+        boolean userLogged=false;
+        for(User usr: userList)
+        {
+            if(usr.getSession() == null ? cookie.getValue() == null : usr.getSession().equals(cookie.getValue()))
+            {
+                userLogged = true;
+                return Response.status(status).entity(usr.getLogin()+" "+cookie.getValue()).build();
+            
+            }
+        }
+        return Response.status(status).entity("Nikt nie jest zalogowany"+cookie.getValue()).build();
+    }
+    }
+    
+  @GET
+    @Path("/logout")
+    public Response logoutUser(@CookieParam("name") Cookie cookie) {
+         int status = 200;
+        if (cookie == null) {
+        return Response.status(status).entity("Brak cookie").build();
+    } else {
+        List<User> userList = userListContainer.getUsers();
+        boolean userLogged=false;
+        for(User usr: userList)
+        {
+            if(usr.getSession() == null ? cookie.getValue() == null : usr.getSession().equals(cookie.getValue()))
+            {
+                userListContainer.setSession(usr.getLogin(), "0");
+                NewCookie newCookie = new NewCookie(cookie, null, 0, false);
+                return Response.ok("OK").cookie(newCookie).build();
+                
+            }
+        }
+        return Response.status(status).entity("Nikt nie jest zalogowany").build();
+    }
+    }
+    
+    
+    @POST
+    @Path("/login")
+    public Response loginUser(String req) {
+        String[] parts = req.split("\n");
+         boolean userLogged = false;
+         NewCookie cookie=null;
+         Timestamp time= new Timestamp(System.currentTimeMillis());
+         long milis= time.getTime();
+        List<User> userList = userListContainer.getUsers();
+        for(User usr: userList)
+        {
+            if(usr.getLogin() == null ? parts[0].trim() == null : usr.getLogin().equals(parts[0].trim()))
+            {
+                if(usr.getPassword() == null ? parts[1].trim() == null : usr.getPassword().equals(parts[1].trim())){
+                userLogged = true;
+                userListContainer.setSession(parts[0].trim(), Long.toString(milis));
+                break;
+                }
+            }
+        }
+        if(userLogged)
+        {
+            //dodac cookie
+            cookie = new NewCookie("name", Long.toString(milis));
+            
+        }
+        
+    return Response.ok("OK").cookie(cookie).build();
+        
     }
     
     @POST
