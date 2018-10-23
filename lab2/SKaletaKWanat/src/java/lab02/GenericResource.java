@@ -5,6 +5,8 @@
  */
 package lab02;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -14,45 +16,86 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("generic")
+@Path("/my_app")
 public class GenericResource {
-
+    private List<User> userList;
     @Context
     private UriInfo context;
 
     public GenericResource() {
+        userList = new ArrayList<>();
+        userList.add(new User("anna", "anna"));
+        userList.add(new User("ola", "ola"));
+        userList.add(new User("maciek", "maciek"));
+        userList.add(new User("michal", "michal"));
     }
 
     @GET
     @Path("/users")
     public String getUsersList() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+        StringBuilder sb = new StringBuilder();
+        for(User usr: userList)
+        {
+            sb.append(usr.toString());
+            sb.append("<br>");
+        }
+        return sb.toString();
     }
 
     @GET
     @Path("/users/{login}")
-    public String checkIfUserExist() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    public String checkIfUserExist(@PathParam("login") String pLogin) {
+        boolean userExist = false;
+        for(User usr: userList)
+        {
+            if(usr.getLogin() == null ? pLogin == null : usr.getLogin().equals(pLogin))
+            {
+                userExist = true;
+                break;
+            }
+        }
+        if(userExist)
+        {
+            return "uzytkownik istnieje";
+        }
+        return "brak uzytkownika";
     }
     
     @POST
     @Path("/users")
-    public String createUser() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    public String createUser(String login, String passwd) {
+        userList.add(new User(login, passwd));
+        return "dodano";
     }
     
     @PUT
     @Path("/users/{login}")
-    public void setNewPasswdForUser(String content) {
+    public String setNewPasswdForUser(@PathParam("login") String pLogin) {
+        for(User usr: userList)
+        {
+            if(usr.getLogin() == null ? pLogin == null : usr.getLogin().equals(pLogin))
+            {
+                usr.setPassword("12345");
+                break;
+            }
+        }
+        return "Nowe haslo: 1234";
+        
     }
     
     @DELETE
     @Path("/users/{login}")
-    public void deleteUser(String content) {
+    public void deleteUser(@PathParam("login") String pLogin) {
+        for(User usr: userList)
+        {
+            if(usr.getLogin() == null ? pLogin == null : usr.getLogin().equals(pLogin))
+            {
+                userList.remove(usr);
+                break;
+            }
+        }
     }
 }
