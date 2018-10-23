@@ -40,7 +40,7 @@ public class GenericResource {
         for(User usr: userList)
         {
             sb.append(usr.toString());
-            sb.append("<br>");
+            sb.append("\n");
         }
         return sb.toString();
     }
@@ -66,9 +66,9 @@ public class GenericResource {
     
     @POST
     @Path("/users")
-    public String createUser(String login, String passwd) {
-        userList.add(new User(login, passwd));
-        return "dodano";
+    public void createUser(String req) {
+        String[] parts = req.split("\n");
+        userList.add(new User(parts[0], parts[1]));
     }
     
     @PUT
