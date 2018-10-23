@@ -20,6 +20,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
@@ -42,7 +43,7 @@ public class GenericResource {
         
     }
     
-    private void sortUsers(List<User> userList, boolean descOrder)
+        private void sortUsers(List<User> userList, boolean descOrder)
     {
         Collections.sort(userList, new Comparator<User>() {
                 @Override
@@ -76,26 +77,63 @@ public class GenericResource {
         }
     }
     
-    private StringBuilder getStringBuilder(List<User> userList)
+    private StringBuilder getStringBuilder(List<User> userList, int type)
     {
         StringBuilder sb = new StringBuilder();
-        for(User usr: userList)
+        if(type==1)
         {
-            sb.append(usr.toString());
-            sb.append("\n");
+            sb.append("<table>\n");
+            for(User usr: userList)
+            {
+                sb.append("<tr><td>");
+                sb.append(usr.toString());
+                sb.append("</td></tr>\n");
+            }
+            sb.append("</table>");
+        }
+        else if(type==2)
+        {
+            Integer counter = 0;
+            for(User usr: userList)
+            {
+                counter++;
+                sb.append("<user ID="+counter.toString()+">\n");
+                sb.append("\t<login>\n");
+                sb.append("\t\t");
+                sb.append(usr.toString());
+                sb.append("\n\t</login>\n");
+                sb.append("</user>\n");
+            }
+        }
+        else if(type==3)
+        {
+            Integer counter = 0;
+            for(User usr: userList)
+            {
+                counter++;
+                sb.append("{\n");
+                sb.append("\t\"user"+counter.toString()+"\": {\n");
+                sb.append("\t\t\"login\": \"");
+                sb.append(usr.toString());
+                sb.append("\"\n");
+                sb.append("\t}\n");
+            }
+        }
+        else{
+            for(User usr: userList)
+            {
+                sb.append(usr.toString());
+                sb.append("\n");
+            }
         }
         return sb;
     }
     
-    @GET
-    @Consumes({"text/plain"})
-    @Produces({"text/plain"})
-    @Path("/users")
-    public Response getUsersList(
-            @QueryParam("sortBy") String sortBy,
-            @QueryParam("sortDir") String sortDir,
-            @QueryParam("page") String page,
-            @QueryParam("count") String count)
+    public Response performGetReq(String sortBy,
+                                  String sortDir,
+                                  String page,
+                                  String count,
+                                  int type)
     {
         List<User> userList = userListContainer.getUsers();
         List<User> listToDisplay = new ArrayList<>();
@@ -124,14 +162,63 @@ public class GenericResource {
         }
         if(limitedView)
         {
-            sb = getStringBuilder(listToDisplay);
+            sb = getStringBuilder(listToDisplay, type);
         }
         else
         {
-            sb = getStringBuilder(userList);
+            sb = getStringBuilder(userList, type);
         }
         
         return Response.status(status).entity(sb.toString()).build();
+    }
+    
+    
+    @GET
+    @Consumes({"text/plain"})
+    @Path("/users")
+    public Response getUsersList(
+            @QueryParam("sortBy") String sortBy,
+            @QueryParam("sortDir") String sortDir,
+            @QueryParam("page") String page,
+            @QueryParam("count") String count)
+    {
+        return performGetReq(sortBy, sortDir, page, count, 0);
+    }
+    
+    @GET
+    @Consumes({"text/html"})
+    @Path("/users")
+    public Response getUsersListHtml(
+            @QueryParam("sortBy") String sortBy,
+            @QueryParam("sortDir") String sortDir,
+            @QueryParam("page") String page,
+            @QueryParam("count") String count)
+    {
+        return performGetReq(sortBy, sortDir, page, count, 1);
+    }
+    
+    @GET
+    @Consumes({"text/xml"})
+    @Path("/users")
+    public Response getUsersListXml(
+            @QueryParam("sortBy") String sortBy,
+            @QueryParam("sortDir") String sortDir,
+            @QueryParam("page") String page,
+            @QueryParam("count") String count)
+    {
+        return performGetReq(sortBy, sortDir, page, count, 2);
+    }
+    
+    @GET
+    @Consumes({"application/json"})
+    @Path("/users")
+    public Response getUsersListJson(
+            @QueryParam("sortBy") String sortBy,
+            @QueryParam("sortDir") String sortDir,
+            @QueryParam("page") String page,
+            @QueryParam("count") String count)
+    {
+        return performGetReq(sortBy, sortDir, page, count, 3);
     }
 
     @GET
