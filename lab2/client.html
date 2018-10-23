@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="client.js"></script>
+</head>
+
+<body>
+  <div id="root">
+  	<form method="post" onsubmit=>
+  		<input type="text" name="login" placeholder="login" id="log" required><br />
+  		<input type="password" name="password" placeholder="password" id="passwd" required><br />
+  		<button onclick="clientLogin()">send</button>
+  	</form>
+  	<button id="getUsers" onclick="getUsers()">Wyswietl dane</button><br />
+  	<button id="logout" onclick="logoutMe()">Wyloguj</button>
+  	<p id="msg">
+  	</p>
+  </div>
+
+  
+</body>
+
+</html>
+
+<script>
+function clientLogin()
+{
+	var log = document.getElementById("log");
+	var passwd = document.getElementById("passwd");
+    request = new XMLHttpRequest();
+	request.onreadystatechange = updateDone;
+	request.open('POST', 'http://localhost:8080/my_app/login', true);
+	
+	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	var params = [log.value, passwd.value];
+	var joinedParams = params.join('\n');
+	request.send(joinedParams);
+}
+
+function updateDone(){
+    if(request.readyState == 4 && request.status == 200){
+		console.log(request.responseText);
+    }
+}
+
+function displayData(){
+    if(request.readyState == 4 && request.status == 200){
+		alert(request.responseText);
+    }
+}
+
+function getUsers()
+{
+    request = new XMLHttpRequest();
+    request.onreadystatechange = displayData;
+	request.open('GET', 'http://localhost:8080/my_app/login', true);
+	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	request.send();
+	
+}
+
+function logoutMe()
+{
+    request = new XMLHttpRequest();
+    request.onreadystatechange = updateDone;
+	request.open('GET', 'http://localhost:8080/my_app/logout', true);
+	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	request.send();
+	
+}
+
+</script>
