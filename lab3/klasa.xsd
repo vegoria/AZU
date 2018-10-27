@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-<element name="klasa">
-  <complexType>
-      <element name="numer" type="integer"/>
-      <element name="litera" type="string"/>
-      <element name="wychowawca">
-        <complexType>
-          <element name="typOsoby">
-            <simpleType>
-              <restriction base="string">
-                <enumeration value="NAUCZYCIEL"/>
-                <enumeration value="UCZEN"/>
-              </restriction>
-            </simpleType>
-          </element>
-          <element name="imie" type="string"/>
-          <element name="nazwisko" type="string"/>
-          <element name="rokUrodzenia" type="integer"/>
-        </complexType>
-      </element>
-      <element name="uczniowie" type="string">
-        <complexType>
-            <sequence>
-                <element name="typOsoby">
-                    <simpleType>
-                        <restriction base="string">
-                            <enumeration value="NAUCZYCIEL"/>
-                            <enumeration value="UCZEN"/>
-                        </restriction>
-                    </simpleType>
-                </element>
-                <element name="imie" type="string"/>
-                <element name="nazwisko" type="string"/>
-                <element name="rokUrodzenia" type="integer"/>
-            </sequence>
-        </complexType>
-</element>
-  </complexType>
-</element>
-
-</schema>
+<xs:element name="klasa">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="numer" type="xs:int"></xs:element>
+            <xs:element name="litera" type="xs:string"></xs:element>
+            <xs:element name="wychowawca">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="typOsoby">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="NAUCZYCIEL"/>
+                                    <xs:enumeration value="UCZEN"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="imie" type="xs:string"></xs:element>
+                        <xs:element name="nazwisko" type="xs:string"></xs:element>
+                        <xs:element name="rokUrodzenia" type="xs:int"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="uczniowie">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="uczen" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="typOsoby">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:enumeration value="NAUCZYCIEL"/>
+                                                <xs:enumeration value="UCZEN"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="imie" type="xs:string"></xs:element>
+                                    <xs:element name="nazwisko" type="xs:string"></xs:element>
+                                    <xs:element name="rokUrodzenia" type="xs:int"></xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+</xs:schema>
