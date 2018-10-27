@@ -20,6 +20,11 @@ class Klasa():
         self.wychowawca = None
         self.uczniowie = {}
 
+def saveToXml(klasa):
+    pass
+
+def saveFromXml():
+    pass
 
 
 klasa = None
@@ -27,6 +32,7 @@ option = 1
 while option !='3':
     print('Co chcesz zrobic?')
     print('1. Stworzyc xml z klasy')
+    print('1. Stworzyc obiekt z pliku xml')
     print('3. Walidacja pliku XML')
     print('4. Wyjscie')
     option = input()
@@ -64,6 +70,9 @@ while option !='3':
             klasa.uczniowie.append(uczen)
             print("Czy chcesz dodac kolejnego ucznia? [y/n]")
             innerOption=input()
+        saveToXml(klasa)
+    elif option == '2':
+        saveFromXml()
     elif option == '3':
         print("Podaj sciezke xml:")
         xmlFilePath = input()
