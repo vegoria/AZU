@@ -13,14 +13,16 @@ class Osoba():
         self.nazwisko = None
         self.rokUrodzenia = None
 
-    def toDict(self):
-        dict = {
-            "typOsoby": self.typOsoby,
-            "imie": self.imie,
-            "nazwisko": self.nazwisko,
-            "rokUrodzenia": self.rokUrodzenia
-        }
-        return dict
+    def toXml(self):
+        if self.typOsoby == TypOsoby.NAUCZYCIEL:
+            typ = "NAUCZYCIEL"
+        else:
+            typ = "UCZEN"
+        xml = "\n".join(["\t\t\t<typOsoby>"+typ+"</typOsoby>",
+                         "\t\t\t<imie>" + self.imie + "</imie>",
+                         "\t\t\t<nazwisko>" + self.nazwisko + "</nazwisko>",
+                         "\t\t\t<rokUrodzenia>" + str(self.rokUrodzenia) + "</rokUrodzenia>"])
+        return xml
 
 class Klasa():
     def __init__(self):
@@ -29,21 +31,25 @@ class Klasa():
         self.wychowawca = None
         self.uczniowie = []
 
-    def toDict(self):
-        dict = {
-            "klasa": {
-                "numer": self.numer,
-                "litera": self.litera,
-                "wychowawca": self.wychowawca.toDict(),
-                "uczniowie": [ucz.toDict()for ucz in self.uczniowie]}
-        }
-        return dict
-
-    def makeXML(self):
-        pass
+    def toXml(self):
+        xml = "\n".join(["<klasa>",
+                           "\t<numer>"+str(self.numer)+"</numer>",
+                           "\t<litera>" + str(self.litera) + "</litera>",
+                           "\t<numer>" + str(self.numer) + "</numer>",
+                           "\t<wychowawca>",
+                           self.wychowawca.toXml(),
+                           "\t</wychowawca>",
+                           "\t<uczniowie>"])
+        for ucz in self.uczniowie:
+            xml = "\n".join([xml,
+                             "\t\t<uczen>",
+                             ucz.toXml(),
+                             "\t\t</uczen>"])
+        xml = "\n".join([xml, "\t</uczniowie>"])
+        return xml
 
 def saveToXml(klasa):
-    data = klasa.makeXML() #TODO zaimplementowac makeXML
+    data = klasa.toXml()
     file = open('output.xml', 'w')
     file.write(data)
     file.close()
