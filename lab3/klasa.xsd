@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema>
+
+<element name="klasa">
+  <complexType>
+      <element name="numer" type="integer"/>
+      <element name="litera" type="string"/>
+      <element name="wychowawca">
+        <complexType>
+          <element name="typOsoby">
+            <simpleType>
+              <restriction base="string">
+                <enumeration value="NAUCZYCIEL"/>
+                <enumeration value="UCZEN"/>
+              </restriction>
+            </simpleType>
+          </element>
+          <element name="imie" type="string"/>
+          <element name="nazwisko" type="string"/>
+          <element name="rokUrodzenia" type="integer"/>
+        </complexType>
+      </element>
+      <element name="uczniowie" type="string">
+        <complexType>
+            <sequence>
+                <element name="typOsoby">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="NAUCZYCIEL"/>
+                            <enumeration value="UCZEN"/>
+                        </restriction>
+                    </simpleType>
+                </element>
+                <element name="imie" type="string"/>
+                <element name="nazwisko" type="string"/>
+                <element name="rokUrodzenia" type="integer"/>
+            </sequence>
+        </complexType>
+</element>
+  </complexType>
+</element>
+
+</schema>

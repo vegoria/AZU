@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<klasa>
+    <numer>1</numer>
+    <litera>a</litera>
+    <wychowawca>
+        <typOsoby>NAUCZYCIEL</typOsoby>
+        <imie>Jadwiga</imie>
+        <nazwisko>Kaleta</nazwisko>
+        <rokUrodzenia>1980</rokUrodzenia>
+    </wychowawca>
+    <uczniowie>
+        <uczen>
+            <typOsoby>UCZEN</typOsoby>
+            <imie>Sylwia</imie>
+            <nazwisko>Kaleta</nazwisko>
+            <rokUrodzenia>1995</rokUrodzenia>
+        </uczen>
+        <uczen>
+            <typOsoby>UCZEN</typOsoby>
+            <imie>Kacper</imie>
+            <nazwisko>Nowak</nazwisko>
+            <rokUrodzenia>1995</rokUrodzenia>
+        </uczen>
+        <uczen>
+            <typOsoby>UCZEN</typOsoby>
+            <imie>Magdalena</imie>
+            <nazwisko>Kwiatkowska</nazwisko>
+            <rokUrodzenia>1995</rokUrodzenia>
+        </uczen>
+    </uczniowie>
+</klasa>
