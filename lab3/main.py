@@ -58,13 +58,28 @@ def saveToXml(klasa):
 def saveFromXml():
     print("Podaj sciezke do pliku xml:")
     xmlPath = input()
-    print("Podaj sciezke do schematu xsd")
-    xsdPath = input()
-    parsedXml = ElementTree.parse(xmlPath)
-    mySchema = xmlschema.XMLSchema(xsdPath)
-    root = parsedXml.getroot()
-    # klasy = mySchema.elements['klasa'].decode(root[0]))
-    #  #TODO finish parsing
+    xml = ElementTree.parse(xmlPath)
+    tree = xml.getroot()
+
+    klasa = Klasa()
+    klasa.numer = tree[0].text
+    klasa.litera = tree[1].text
+
+    wychowawca = Osoba()
+    wychowawca.typOsoby = TypOsoby.NAUCZYCIEL
+    wychowawca.imie = tree[2][1].text
+    wychowawca.nazwisko = tree[2][2].text
+    wychowawca.rokUrodzenia = tree[2][3].text
+    klasa.wychowawca = wychowawca
+
+    for student in tree.findall('uczniowie/uczen'):
+        uczen = Osoba()
+        uczen.typOsoby = TypOsoby.UCZEN
+        uczen.imie = student.find('imie').text
+        uczen.nazwisko = student.find('nazwisko').text
+        uczen.rokUrodzenia = student.find('rokUrodzenia').text
+        klasa.uczniowie.append(uczen)
+
 def findByName():
     print("Podaj sciezke do pliku xml:")
     xmlPath = input()
