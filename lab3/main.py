@@ -105,6 +105,28 @@ def makeHtmlFile():
     file.write(data)
     file.close()
 
+def checkXMLFile():
+    print("Podaj sciezke do pliku xml:")
+    xmlPath = input()
+    xml = ElementTree.parse(xmlPath)
+    tree=xml.getroot()
+    print("Klasa: "+tree[0].text+tree[1].text)
+    print("WYCHOWAWCA: "+tree[2][1].text+" "+tree[2][2].text)
+    print("UCZNIOWIE:")
+    for student in tree.findall('uczniowie/uczen'):
+        print(student.find('imie').text+" "+student.find('nazwisko').text)
+    error=False
+    if tree[2][0].text=='UCZEN':
+        tree[2][0].text='NAUCZYCIEL'
+        error=True
+    for student in tree.findall('uczniowie/uczen'):
+        if student.find('typOsoby').text=='NAUCZYCIEL':
+            student.find('typOsoby').text='UCZEN'
+            error=True
+    if error==True:
+        print('w pliku wystapily bledy')
+        xml.write('klasanew.xml')
+
 klasa = None
 option = 1
 while option !='3':
@@ -112,10 +134,11 @@ while option !='3':
     print('1. Stworzyc xml z klasy')
     print('2. Stworzyc obiekt z pliku xml')
     print('3. Walidacja pliku XML')
-    print('4. Wyszukiwanie po imieniu i nazwisku')
-    print('5. Wyszukiwanie po dacie urodzenia')
-    print('6. Utwórz plik HTML na podstawie pliku XSLT')
-    print('7. Wyjscie')
+    print('4. Wypisanie informacji i poprawa błednych typów')
+    print('5. Wyszukiwanie po imieniu i nazwisku')
+    print('6. Wyszukiwanie po dacie urodzenia')
+    print('7. Utwórz plik HTML na podstawie pliku XSLT')
+    print('8. Wyjscie')
     option = input()
 
     if option == '1':
@@ -163,10 +186,12 @@ while option !='3':
         print("sprawdzanie poprawnosci:")
         print(mySchema.is_valid(xmlFilePath))
     elif option == '4':
-        findByName()
+        checkXMLFile()
     elif option == '5':
-        findByBirthDate()
+        findByName()
     elif option == '6':
-        makeHtmlFile()
+        findByBirthDate()
     elif option == '7':
+        makeHtmlFile()
+    elif option == '8':
         break
