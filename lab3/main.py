@@ -1,4 +1,5 @@
 import xmlschema
+import lxml
 from enum import Enum
 from xml.etree import ElementTree
 
@@ -64,6 +65,45 @@ def saveFromXml():
     root = parsedXml.getroot()
     # klasy = mySchema.elements['klasa'].decode(root[0]))
     #  #TODO finish parsing
+def findByName():
+    print("Podaj sciezke do pliku xml:")
+    xmlPath = input()
+    print("Podaj imie ucznia:")
+    imie = input()
+    print("Podaj nazwisko ucznia:")
+    nazwisko = input()
+    path = '/klasa/uczniowie/uczen[imie="' + imie + '"][nazwisko="' + nazwisko + '"]'
+    tree = lxml.etree.parse(xmlPath)
+    students = tree.xpath(path)
+    for e in students:
+        print("Imie: " + e.find("imie").text)
+        print("Nazwisko: " + e.find("nazwisko").text)
+        print("Rok urodzenia: " + e.find("rokUrodzenia").text)
+def findByBirthDate():
+    print("Podaj sciezke do pliku xml:")
+    xmlPath = input()
+    print("Podaj date urodzenia ucznia:")
+    date = input()
+    date=str(date)
+    tree = lxml.etree.parse(xmlPath)
+    students = tree.xpath('/klasa/uczniowie/uczen[rokUrodzenia="%s"]'%date)
+    for e in students:
+        print("Imie: "+e.find("imie").text)
+        print("Nazwisko: "+e.find("nazwisko").text)
+        print("Rok urodzenia: "+e.find("rokUrodzenia").text)
+def makeHtmlFile():
+    print("Podaj sciezke do pliku xml:")
+    xmlPath = input()
+    print("Podaj sciezke do pliku xslt:")
+    xsltPath = input()
+    xml=lxml.etree.parse(xmlPath)
+    xslt=lxml.etree.parse(xsltPath)
+    transform = lxml.etree.XSLT(xslt)
+    data=transform(xml)
+    file=open('klasa.html','w')
+    data=str(data)
+    file.write(data)
+    file.close()
 
 klasa = None
 option = 1
@@ -72,7 +112,10 @@ while option !='3':
     print('1. Stworzyc xml z klasy')
     print('2. Stworzyc obiekt z pliku xml')
     print('3. Walidacja pliku XML')
-    print('4. Wyjscie')
+    print('4. Wyszukiwanie po imieniu i nazwisku')
+    print('5. Wyszukiwanie po dacie urodzenia')
+    print('6. Utwórz plik HTML na podstawie pliku XSLT')
+    print('7. Wyjscie')
     option = input()
 
     if option == '1':
@@ -120,4 +163,10 @@ while option !='3':
         print("sprawdzanie poprawnosci:")
         print(mySchema.is_valid(xmlFilePath))
     elif option == '4':
+        findByName()
+    elif option == '5':
+        findByBirthDate()
+    elif option == '6':
+        makeHtmlFile()
+    elif option == '7':
         break
