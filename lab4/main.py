@@ -1,7 +1,10 @@
+from flask import Flask
 import xmlschema
 import lxml
 from enum import Enum
 from xml.etree import ElementTree
+
+app = Flask(__name__)
 
 class TypOsoby(Enum):
     NAUCZYCIEL = 1
@@ -142,6 +145,8 @@ def checkXMLFile():
         print('w pliku wystapily bledy')
         xml.write('klasanew.xml')
 
+
+"""
 klasa = None
 option = 1
 while option !='3':
@@ -210,3 +215,8 @@ while option !='3':
         makeHtmlFile()
     elif option == '8':
         break
+"""
+
+@app.route('/')
+def index():
+    return "Hello, World!"
