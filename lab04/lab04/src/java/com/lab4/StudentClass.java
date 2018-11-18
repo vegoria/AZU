@@ -16,14 +16,14 @@ public class StudentClass {
     private Person tutor;
     private List<Person> students;
     private int number;
-    private char letter;
+    private String letter;
     
     public StudentClass()
     {
         students = new ArrayList<Person>();
     }
     
-    public StudentClass(int number, char letter)
+    public StudentClass(int number, String letter)
     {
         students = new ArrayList<Person>();
         this.number = number;
@@ -47,11 +47,11 @@ public class StudentClass {
         this.number = number;
     }
 
-    public char getLetter() {
+    public String getLetter() {
         return letter;
     }
 
-    public void setLetter(char letter) {
+    public void setLetter(String letter) {
         this.letter = letter;
     }
     
@@ -65,4 +65,21 @@ public class StudentClass {
         return students;
     }
     
+    @Override
+    public String toString()
+    {
+        StringBuilder sB = new StringBuilder();
+        sB.append("Klasa: ");
+        sB.append(number);
+        sB.append(letter);
+        sB.append("\nWychowawca: ");
+        sB.append(tutor.toString());
+        sB.append("\nUczniowie:\n");
+        for(Person stud: students)
+        {
+            sB.append(stud);
+            sB.append("\n");
+        }
+        return sB.toString();
+    }
 }

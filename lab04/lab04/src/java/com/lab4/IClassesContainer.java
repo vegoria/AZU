@@ -14,8 +14,8 @@ import javax.ejb.Remote;
 public interface IClassesContainer
 {
     public List<StudentClass> getClasses();
-    public StudentClass findClass(int number, char letter);
-    public boolean removeClass(int number, char letter);
+    public StudentClass findClass(int number, String letter);
+    public boolean removeClass(int number, String letter);
     public void addClass(StudentClass studentClass);
     public boolean replaceClass(StudentClass newClass);
 }

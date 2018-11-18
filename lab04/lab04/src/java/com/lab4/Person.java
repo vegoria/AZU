@@ -71,4 +71,16 @@ public class Person {
         this.birthYear = birthYear;
     }
     
+    @Override
+    public String toString()
+    {
+       StringBuilder sB = new StringBuilder();
+       sB.append(name);
+       sB.append(" ");
+       sB.append(surname);
+       sB.append(" rok urodzenia: ");
+       sB.append(birthYear);
+       return sB.toString();
+    }
+    
 }

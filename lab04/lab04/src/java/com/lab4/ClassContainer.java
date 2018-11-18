@@ -26,12 +26,13 @@ public class ClassContainer implements IClassesContainer
     {
         return classesList;
     }
+    
     @Override
-    public StudentClass findClass(int number, char letter)
+    public StudentClass findClass(int number, String letter)
     {
         for(StudentClass currClass: classesList)
         {
-            if(currClass.getNumber() == number && currClass.getLetter()==letter)
+            if(currClass.getNumber() == number && (currClass.getLetter() == null ? letter == null : currClass.getLetter().equals(letter)))
             {
                 return currClass;
             }
@@ -39,11 +40,11 @@ public class ClassContainer implements IClassesContainer
         return null;
     }
     @Override
-    public boolean removeClass(int number, char letter)
+    public boolean removeClass(int number, String letter)
     {
         for(StudentClass currClass: classesList)
         {
-            if(currClass.getNumber() == number && currClass.getLetter()==letter)
+            if(currClass.getNumber() == number && (currClass.getLetter() == null ? letter == null : currClass.getLetter().equals(letter)))
             {
                 classesList.remove(currClass);
                 return true;
@@ -61,12 +62,24 @@ public class ClassContainer implements IClassesContainer
     {
         for(StudentClass currClass: classesList)
         {
-            if(currClass.getNumber() == newClass.getNumber() && currClass.getLetter()==newClass.getLetter())
+            if(currClass.getNumber() == newClass.getNumber() && (currClass.getLetter() == null ? newClass.getLetter() == null : currClass.getLetter().equals(newClass.getLetter())))
             {
                 currClass = newClass;
                 return true;
             }
         }
         return false;
+    }
+    
+    @Override
+    public String toString()
+    {
+        StringBuilder sB = new StringBuilder();
+        for(StudentClass stClass: classesList)
+        {
+            sB.append(stClass.toString());
+            sB.append("\n\n");
+        }
+        return sB.toString();
     }
 }
