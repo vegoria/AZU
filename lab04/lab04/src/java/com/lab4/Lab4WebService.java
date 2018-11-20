@@ -7,6 +7,8 @@ package com.lab4;
 
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -15,73 +17,85 @@ import javax.jws.WebParam;
  *
  * @author vegor
  */
+
 @WebService(serviceName = "Lab4WebService")
 public class Lab4WebService {
     @EJB
     private IClassesContainer classesContainer;
     /**
      * This is a sample web service operation
+     * @return 
      */
     @WebMethod(operationName = "getAllClasses")
     public String getAllClasses() {
-        return classesContainer.toString();
+        return classesContainer.printAllClasses();
     }
     
     @WebMethod(operationName = "getConcreteClass")
     public String getConcreteClass(@WebParam(name = "number") String number,
                                    @WebParam(name = "letter") String letter)
     {
+        
         int classNumber = Integer.parseInt(number);
+        
         StudentClass studentClass = classesContainer.findClass(classNumber, letter);
+        
+        if (studentClass==null)
+            return "pusta klasa";
         return studentClass.toString();
     }
     
     @WebMethod(operationName = "createNewClass")
-    public void createNewClass(@WebParam(name = "number") String number,
+    public String createNewClass(@WebParam(name = "number") String number,
                                  @WebParam(name = "letter") String letter)
     {
+        
         StudentClass studentClass = new StudentClass(Integer.parseInt(number), letter);
         classesContainer.addClass(studentClass);
+        return studentClass.getLetter();
     }
     
     @WebMethod(operationName = "addTutorToClass")
-    public void addTutorToClass(@WebParam(name = "number") String number,
+    public String addTutorToClass(@WebParam(name = "number") String number,
                                 @WebParam(name = "letter") String letter,
                                 @WebParam(name = "name") String name,
                                 @WebParam(name = "surname") String surname,
                                 @WebParam(name = "year") String year)
     {
-        StudentClass stClass = classesContainer.findClass(Integer.parseInt(number), letter);
         Person tutor = new Person(name, surname, Integer.parseInt(year), Person.PersonType.NAUCZYCIEL);
-        stClass.setTutor(tutor);
+        classesContainer.addTutorToClass(Integer.parseInt(number), letter, tutor);
+        return "ok";
     }
     
     @WebMethod(operationName = "addStudentToClass")
-    public void addStudentToClass(@WebParam(name = "number") String number,
+    public String addStudentToClass(@WebParam(name = "number") String number,
                                 @WebParam(name = "letter") String letter,
                                 @WebParam(name = "name") String name,
                                 @WebParam(name = "surname") String surname,
                                 @WebParam(name = "year") String year)
     {
-        StudentClass stClass = classesContainer.findClass(Integer.parseInt(number), letter);
+        
         Person student = new Person(name, surname, Integer.parseInt(year), Person.PersonType.UCZEN);
-        stClass.setTutor(student);
+        classesContainer.addStudentToClass(Integer.parseInt(number), letter, student);
+        return "ok";
     }
     
     @WebMethod(operationName = "removeClass")
-    public void removeClass(@WebParam(name = "number") String number,
+    public String removeClass(@WebParam(name = "number") String number,
                             @WebParam(name = "letter") String letter)
     {
         classesContainer.removeClass(Integer.parseInt(number), letter);
+        return "ok";
     }
     
     @WebMethod(operationName = "replaceClass")
-    public void replaceClass(@WebParam(name = "number") String number,
+    public String replaceClass(@WebParam(name = "number") String number,
                                  @WebParam(name = "letter") String letter)
     {
         classesContainer.removeClass(Integer.parseInt(number), letter);
         StudentClass studentClass = new StudentClass(Integer.parseInt(number), letter);
         classesContainer.addClass(studentClass);
+        return "ok";
     }
     
 }

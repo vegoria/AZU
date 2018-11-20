@@ -17,5 +17,8 @@ public interface IClassesContainer
     public StudentClass findClass(int number, String letter);
     public boolean removeClass(int number, String letter);
     public void addClass(StudentClass studentClass);
+    public void addTutorToClass(int number, String letter, Person tutor);
+    public void addStudentToClass(int number, String letter,Person student);
     public boolean replaceClass(StudentClass newClass);
+    public String printAllClasses();
 }

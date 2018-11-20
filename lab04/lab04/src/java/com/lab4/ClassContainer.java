@@ -7,6 +7,7 @@ package com.lab4;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 
 /**
@@ -19,7 +20,8 @@ public class ClassContainer implements IClassesContainer
     List<StudentClass> classesList;
     public ClassContainer()
     {
-        classesList = new ArrayList<StudentClass>();
+        classesList = new ArrayList<>();
+        
     }
     @Override
     public List<StudentClass> getClasses()
@@ -57,6 +59,7 @@ public class ClassContainer implements IClassesContainer
     {
         classesList.add(studentClass);
     }
+ 
     @Override
     public boolean replaceClass(StudentClass newClass)
     {
@@ -72,7 +75,7 @@ public class ClassContainer implements IClassesContainer
     }
     
     @Override
-    public String toString()
+    public String printAllClasses()
     {
         StringBuilder sB = new StringBuilder();
         for(StudentClass stClass: classesList)
@@ -81,5 +84,29 @@ public class ClassContainer implements IClassesContainer
             sB.append("\n\n");
         }
         return sB.toString();
+    }
+
+  
+    @Override
+    public void addTutorToClass(int number, String letter, Person tutor)
+    {
+        for(StudentClass currClass: classesList)
+        {
+            if(currClass.getNumber() == number && (currClass.getLetter() == null ? letter == null : currClass.getLetter().equals(letter)))
+            {
+                currClass.setTutor(tutor);
+            }
+        }
+    }
+
+    @Override
+    public void addStudentToClass(int number, String letter, Person student) {
+        for(StudentClass currClass: classesList)
+        {
+            if(currClass.getNumber() == number && (currClass.getLetter() == null ? letter == null : currClass.getLetter().equals(letter)))
+            {
+                currClass.addStudent(student);
+            }
+        }
     }
 }

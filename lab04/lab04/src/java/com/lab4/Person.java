@@ -32,14 +32,14 @@ public class Person {
     {
     }
     
-    public Person(String name, String Surname, int year)
+    public Person(String name, String surname, int year)
     {
         this.name = name;
         this.surname = surname;
         this.birthYear = year;
     }
     
-    public Person(String name, String Surname, int year, PersonType type)
+    public Person(String name, String surname, int year, PersonType type)
     {
         this.name = name;
         this.surname = surname;
