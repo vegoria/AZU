@@ -146,7 +146,7 @@
   </binding>
   <service name="Lab4WebService">
     <port name="Lab4WebServicePort" binding="tns:Lab4WebServicePortBinding">
-      <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+      <soap:address location="http://localhost:8080/lab04/Lab4WebService"/>
     </port>
   </service>
 </definitions>

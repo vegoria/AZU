@@ -38,10 +38,9 @@ public class Lab4WebService {
         
         int classNumber = Integer.parseInt(number);
         
-        StudentClass studentClass = classesContainer.findClass(classNumber, letter);
-        
+        StudentClass studentClass = classesContainer.findClass(classNumber, letter); 
         if (studentClass==null)
-            return "pusta klasa";
+            return "Nie ma takiej klasy";
         return studentClass.toString();
     }
     
@@ -64,7 +63,7 @@ public class Lab4WebService {
     {
         Person tutor = new Person(name, surname, Integer.parseInt(year), Person.PersonType.NAUCZYCIEL);
         classesContainer.addTutorToClass(Integer.parseInt(number), letter, tutor);
-        return "ok";
+        return "Dodano nauczyciela";
     }
     
     @WebMethod(operationName = "addStudentToClass")
@@ -77,7 +76,7 @@ public class Lab4WebService {
         
         Person student = new Person(name, surname, Integer.parseInt(year), Person.PersonType.UCZEN);
         classesContainer.addStudentToClass(Integer.parseInt(number), letter, student);
-        return "ok";
+        return "Dodano ucznia";
     }
     
     @WebMethod(operationName = "removeClass")
@@ -85,7 +84,7 @@ public class Lab4WebService {
                             @WebParam(name = "letter") String letter)
     {
         classesContainer.removeClass(Integer.parseInt(number), letter);
-        return "ok";
+        return "Klasa usunięta";
     }
     
     @WebMethod(operationName = "replaceClass")
@@ -95,7 +94,7 @@ public class Lab4WebService {
         classesContainer.removeClass(Integer.parseInt(number), letter);
         StudentClass studentClass = new StudentClass(Integer.parseInt(number), letter);
         classesContainer.addClass(studentClass);
-        return "ok";
+        return "Klasa zamieniona";
     }
     
 }

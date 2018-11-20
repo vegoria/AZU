@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://lab4.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://lab4.com/">
+
+<xs:element name="addStudentToClass" type="tns:addStudentToClass"/>
+
+<xs:element name="addStudentToClassResponse" type="tns:addStudentToClassResponse"/>
+
+<xs:element name="addTutorToClass" type="tns:addTutorToClass"/>
+
+<xs:element name="addTutorToClassResponse" type="tns:addTutorToClassResponse"/>
+
+<xs:element name="createNewClass" type="tns:createNewClass"/>
+
+<xs:element name="createNewClassResponse" type="tns:createNewClassResponse"/>
+
+<xs:element name="getAllClasses" type="tns:getAllClasses"/>
+
+<xs:element name="getAllClassesResponse" type="tns:getAllClassesResponse"/>
+
+<xs:element name="getConcreteClass" type="tns:getConcreteClass"/>
+
+<xs:element name="getConcreteClassResponse" type="tns:getConcreteClassResponse"/>
+
+<xs:element name="removeClass" type="tns:removeClass"/>
+
+<xs:element name="removeClassResponse" type="tns:removeClassResponse"/>
+
+<xs:element name="replaceClass" type="tns:replaceClass"/>
+
+<xs:element name="replaceClassResponse" type="tns:replaceClassResponse"/>
+
+<xs:complexType name="removeClass">
+<xs:sequence>
+<xs:element name="number" type="xs:string" minOccurs="0"/>
+<xs:element name="letter" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="removeClassResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllClasses">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getAllClassesResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createNewClass">
+<xs:sequence>
+<xs:element name="number" type="xs:string" minOccurs="0"/>
+<xs:element name="letter" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createNewClassResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getConcreteClass">
+<xs:sequence>
+<xs:element name="number" type="xs:string" minOccurs="0"/>
+<xs:element name="letter" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getConcreteClassResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addStudentToClass">
+<xs:sequence>
+<xs:element name="number" type="xs:string" minOccurs="0"/>
+<xs:element name="letter" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="surname" type="xs:string" minOccurs="0"/>
+<xs:element name="year" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addStudentToClassResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addTutorToClass">
+<xs:sequence>
+<xs:element name="number" type="xs:string" minOccurs="0"/>
+<xs:element name="letter" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="surname" type="xs:string" minOccurs="0"/>
+<xs:element name="year" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addTutorToClassResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="replaceClass">
+<xs:sequence>
+<xs:element name="number" type="xs:string" minOccurs="0"/>
+<xs:element name="letter" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="replaceClassResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
