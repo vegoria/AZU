@@ -5,8 +5,8 @@
  */
 package lab04client;
 
+
 import com.lab4.Person;
-import com.lab4.PersonType;
 import com.lab4.StudentClass;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -87,18 +87,31 @@ public class Lab04Client {
         
         singleLine = readfile.nextLine();
         line = singleLine.toLowerCase().trim().split("\\s+");
-        tutor=new Person(line[1],line[2],Integer.parseInt(line[3]));
+        //tutor=new Person(line[1],line[2],Integer.parseInt(line[3]));
+        tutor = new Person();
+        tutor.setName(line[1]);
+        tutor.setSurname(line[2]);
+        tutor.setBirthYear(Integer.parseInt(line[3]));
         tutor.setAsTutor();
         while (readfile.hasNext()) {
             singleLine = readfile.nextLine();
             line = singleLine.toLowerCase().trim().split("\\s+");
             if(line.length==1)
                 continue;
-            student=new Person(line[0],line[1],Integer.parseInt(line[2]));
+            //student=new Person(line[0],line[1],Integer.parseInt(line[2]));
+            student=new Person();
+            student.setName(line[0]);
+            student.setSurname(line[1]);
+            student.setBirthYear(Integer.parseInt(line[2]));
             student.setAsStudent();
             studList.add(student);
     }
-        stClass = new StudentClass(classData[0],classData[1],tutor,studList);
+        //stClass = new StudentClass(classData[0],classData[1],tutor,studList);
+        stClass=new StudentClass();
+        stClass.setNumber(Integer.parseInt(classData[0]));
+        stClass.setLetter(classData[1]);
+        stClass.setTutor(tutor);
+        stClass.setStudents(studList);
         if(choice == 1)
             createNewClass(stClass);
         else
