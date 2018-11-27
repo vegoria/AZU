@@ -5,10 +5,14 @@
  */
 package com.lab4;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author vegor
  */
+@XmlRootElement(name = "osoba")
+
 public class Person {
     public enum PersonType
     {
@@ -69,6 +73,16 @@ public class Person {
 
     public void setBirthYear(int birthYear) {
         this.birthYear = birthYear;
+    }
+    
+    public void setAsTutor()
+    {
+        this.type=PersonType.NAUCZYCIEL;
+    }
+    
+    public void setAsStudent()
+    {
+        this.type=PersonType.UCZEN;
     }
     
     @Override

@@ -21,4 +21,5 @@ public interface IClassesContainer
     public void addStudentToClass(int number, String letter,Person student);
     public boolean replaceClass(StudentClass newClass);
     public String printAllClasses();
+    public List<String> getAllClasses();
 }

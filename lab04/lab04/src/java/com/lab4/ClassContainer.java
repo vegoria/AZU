@@ -85,6 +85,16 @@ public class ClassContainer implements IClassesContainer
         }
         return sB.toString();
     }
+    @Override
+    public List<String> getAllClasses()
+    {
+        List<String> result = new ArrayList<>();
+         for(StudentClass stClass: classesList)
+        {
+            result.add(stClass.getNumber()+stClass.getLetter());
+        }
+        return result;
+    }
 
   
     @Override

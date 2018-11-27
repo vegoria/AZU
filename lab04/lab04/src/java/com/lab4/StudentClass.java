@@ -7,27 +7,31 @@ package com.lab4;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author vegor
  */
+@XmlRootElement(name = "klasa")
+
 public class StudentClass {
-    private Person tutor;
     private List<Person> students;
-    private int number;
+    private Person tutor;
     private String letter;
+    private int number;
     
     public StudentClass()
     {
         students = new ArrayList<Person>();
     }
     
-    public StudentClass(int number, String letter)
+    public StudentClass(int number, String letter, Person tutor, List<Person> stud)
     {
-        students = new ArrayList<Person>();
         this.number = number;
         this.letter = letter;
+        this.tutor=tutor;
+        this.students=stud;
     }
     
     public Person getTutor() {
@@ -65,6 +69,9 @@ public class StudentClass {
         return students;
     }
     
+    public void setStudents(List<Person> students) {
+        this.students = students;
+    }
     @Override
     public String toString()
     {

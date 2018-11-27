@@ -27,58 +27,29 @@ public class Lab4WebService {
      * @return 
      */
     @WebMethod(operationName = "getAllClasses")
-    public String getAllClasses() {
-        return classesContainer.printAllClasses();
+    public List<String> getAllClasses() {
+        return classesContainer.getAllClasses();
     }
     
     @WebMethod(operationName = "getConcreteClass")
-    public String getConcreteClass(@WebParam(name = "number") String number,
+    public StudentClass getConcreteClass(@WebParam(name = "number") String number,
                                    @WebParam(name = "letter") String letter)
     {
         
         int classNumber = Integer.parseInt(number);
         
         StudentClass studentClass = classesContainer.findClass(classNumber, letter); 
-        if (studentClass==null)
-            return "Nie ma takiej klasy";
-        return studentClass.toString();
+        return studentClass;
     }
     
     @WebMethod(operationName = "createNewClass")
-    public String createNewClass(@WebParam(name = "number") String number,
-                                 @WebParam(name = "letter") String letter)
+    public String createNewClass(@WebParam(name = "sClass") StudentClass sClass)
     {
         
-        StudentClass studentClass = new StudentClass(Integer.parseInt(number), letter);
-        classesContainer.addClass(studentClass);
-        return studentClass.getLetter();
+        classesContainer.addClass(sClass);
+        return sClass.toString();
     }
-    
-    @WebMethod(operationName = "addTutorToClass")
-    public String addTutorToClass(@WebParam(name = "number") String number,
-                                @WebParam(name = "letter") String letter,
-                                @WebParam(name = "name") String name,
-                                @WebParam(name = "surname") String surname,
-                                @WebParam(name = "year") String year)
-    {
-        Person tutor = new Person(name, surname, Integer.parseInt(year), Person.PersonType.NAUCZYCIEL);
-        classesContainer.addTutorToClass(Integer.parseInt(number), letter, tutor);
-        return "Dodano nauczyciela";
-    }
-    
-    @WebMethod(operationName = "addStudentToClass")
-    public String addStudentToClass(@WebParam(name = "number") String number,
-                                @WebParam(name = "letter") String letter,
-                                @WebParam(name = "name") String name,
-                                @WebParam(name = "surname") String surname,
-                                @WebParam(name = "year") String year)
-    {
-        
-        Person student = new Person(name, surname, Integer.parseInt(year), Person.PersonType.UCZEN);
-        classesContainer.addStudentToClass(Integer.parseInt(number), letter, student);
-        return "Dodano ucznia";
-    }
-    
+     
     @WebMethod(operationName = "removeClass")
     public String removeClass(@WebParam(name = "number") String number,
                             @WebParam(name = "letter") String letter)
@@ -88,12 +59,10 @@ public class Lab4WebService {
     }
     
     @WebMethod(operationName = "replaceClass")
-    public String replaceClass(@WebParam(name = "number") String number,
-                                 @WebParam(name = "letter") String letter)
+    public String replaceClass(@WebParam(name = "sClass") StudentClass sClass)
     {
-        classesContainer.removeClass(Integer.parseInt(number), letter);
-        StudentClass studentClass = new StudentClass(Integer.parseInt(number), letter);
-        classesContainer.addClass(studentClass);
+        classesContainer.removeClass(sClass.getNumber(), sClass.getLetter());
+        classesContainer.addClass(sClass);
         return "Klasa zamieniona";
     }
     
