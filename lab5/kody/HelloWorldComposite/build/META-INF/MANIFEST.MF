@@ -1,0 +1,4 @@
+Bundle-Name: HelloWorldComposite
+Bundle-SymbolicName: HelloWorldComposite
+Bundle-ManifestVersion: 2
+Bundle-Version: 1.0.0
