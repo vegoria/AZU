@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="IfWhileCA" xmlns:ns2="http://j2ee.netbeans.org/wsdl/IfModule/src/ifModuleWsdl" xmlns:ns3="http://j2ee.netbeans.org/wsdl/whileModule/src/whiileModuleWsdl" xmlns:ns4="http://enterprise.netbeans.org/bpel/IfModule/ifModule" xmlns:ns5="http://enterprise.netbeans.org/bpel/whileModule/whileModule" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="casaPort1" interface-name="ns2:ifModuleWsdlPortType" name="endpoint1" service-name="ns1:IfWhileCAService1"/>
+        <endpoint endpoint-name="casaPort2" interface-name="ns3:whiileModuleWsdlPortType" name="endpoint2" service-name="ns1:IfWhileCAService2"/>
+        <endpoint display-name="PartnerLink1" endpoint-name="ifModuleWsdlPortTypeRole_myRole" file-path="ifModule.bpel" interface-name="ns2:ifModuleWsdlPortType" name="endpoint3" process-name="ifModule" service-name="ns4:PartnerLink1"/>
+        <endpoint display-name="PartnerLink1" endpoint-name="whiileModuleWsdlPortTypeRole_myRole" file-path="whileModule.bpel" interface-name="ns3:whiileModuleWsdlPortType" name="endpoint4" process-name="whileModule" service-name="ns5:PartnerLink1"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="IfModule.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="IfWhileCA-IfModule" unit-name="IfModule" unknown="false" x="184" y="145">
+            <provides endpoint="endpoint3"/>
+        </service-engine-service-unit>
+        <service-engine-service-unit artifacts-zip="whileModule.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="IfWhileCA-whileModule" unit-name="whileModule" unknown="false" x="177" y="279">
+            <provides endpoint="endpoint4"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="IfWhileCA-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port bindingType="soap" x="67" y="214">
+                    <link xlink:href="../jbiasa/IfWhileCA.wsdl#xpointer(/definitions/service[@name='IfWhileCAService1']/port[@name='casaPort1'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+                <port bindingType="soap" x="67" y="320">
+                    <link xlink:href="../jbiasa/IfWhileCA.wsdl#xpointer(/definitions/service[@name='IfWhileCAService2']/port[@name='casaPort2'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint2" mode="" provider="endpoint4" route-type="direct" routing-rule="" state="new"/>
+        <connection consumer="endpoint1" mode="" provider="endpoint3" route-type="direct" routing-rule="" state="new"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiasa/IfWhileCA.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/IfModule/ifModuleWsdl.wsdl#xpointer(/definitions/portType[@name='ifModuleWsdlPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/IfWhileCA.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/IfWhileCaWsdl.wsdl#xpointer(/definitions/portType[@name='IfWhileCaWsdlPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/whileModule/whiileModuleWsdl.wsdl#xpointer(/definitions/portType[@name='whiileModuleWsdlPortType'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiasa/IfWhileCA.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiasa/IfWhileCA.wsdl#xpointer(/definitions/binding[@name='casaBinding2'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/IfWhileCA.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/IfWhileCA.wsdl#xpointer(/definitions/binding[@name='casaBinding2'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiasa/IfWhileCA.wsdl#xpointer(/definitions/service[@name='IfWhileCAService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiasa/IfWhileCA.wsdl#xpointer(/definitions/service[@name='IfWhileCAService2'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/IfWhileCA.wsdl#xpointer(/definitions/service[@name='IfWhileCAService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/IfWhileCA.wsdl#xpointer(/definitions/service[@name='IfWhileCAService2'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

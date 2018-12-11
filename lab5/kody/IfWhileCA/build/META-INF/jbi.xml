@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="IfWhileCA" xmlns:ns2="http://enterprise.netbeans.org/bpel/whileModule/whileModule" xmlns:ns3="http://enterprise.netbeans.org/bpel/IfModule/ifModule" xmlns:ns4="http://j2ee.netbeans.org/wsdl/IfModule/src/ifModuleWsdl" xmlns:ns5="http://j2ee.netbeans.org/wsdl/whileModule/src/whiileModuleWsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/jbi ./jbi.xsd">
+    <service-assembly>
+        <identification>
+            <name>IfWhileCA</name>
+            <description>Represents the Service Assembly of IfWhileCA</description>
+        </identification>
+        <service-unit>
+            <identification>
+                <name>IfWhileCA-IfModule</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>IfModule.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>IfWhileCA-whileModule</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>whileModule.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>IfWhileCA-sun-http-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-http-binding.jar</artifacts-zip>
+                <component-name>sun-http-binding</component-name>
+            </target>
+        </service-unit>
+        <connections>
+            <connection>
+                <consumer endpoint-name="casaPort2" service-name="ns1:IfWhileCAService2"/>
+                <provider endpoint-name="whiileModuleWsdlPortTypeRole_myRole" service-name="ns2:PartnerLink1"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="casaPort1" service-name="ns1:IfWhileCAService1"/>
+                <provider endpoint-name="ifModuleWsdlPortTypeRole_myRole" service-name="ns3:PartnerLink1"/>
+            </connection>
+        </connections>
+        <route-types xmlns="http://www.open-esb.net/xml/ns/jbi">
+            <source endpoint-name="casaPort2" mode="local" routing-rule="default" service-name="ns1:IfWhileCAService2">direct</source>
+            <source endpoint-name="casaPort1" mode="local" routing-rule="default" service-name="ns1:IfWhileCAService1">direct</source>
+        </route-types>
+        <interface-mapping xmlns="http://www.open-esb.net/xml/ns/jbi">
+            <implementation>
+                <by-provider endpoint-name="ifModuleWsdlPortTypeRole_myRole" service-name="ns3:PartnerLink1"/>
+                <interface name="ns4:ifModuleWsdlPortType"/>
+            </implementation>
+            <implementation>
+                <by-provider endpoint-name="whiileModuleWsdlPortTypeRole_myRole" service-name="ns2:PartnerLink1"/>
+                <interface name="ns5:whiileModuleWsdlPortType"/>
+            </implementation>
+        </interface-mapping>
+    </service-assembly>
+</jbi>

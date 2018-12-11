@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="IfWhileCaWsdl" targetNamespace="http://j2ee.netbeans.org/wsdl/IfWhileCA/jbiasa/IfWhileCaWsdl"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/IfWhileCA/jbiasa/IfWhileCaWsdl" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+    <types/>
+    <message name="IfWhileCaWsdlOperationRequest">
+        <part name="numberOne" type="xsd:int"/>
+        <part name="numberTwo" type="xsd:int"/>
+        <part name="numberThree" type="xsd:int"/>
+    </message>
+    <message name="IfWhileCaWsdlOperationResponse">
+        <part name="messageOne" type="xsd:string"/>
+        <part name="part2" type="xsd:string"/>
+    </message>
+    <portType name="IfWhileCaWsdlPortType">
+        <operation name="IfWhileCaWsdlOperation">
+            <input name="input1" message="tns:IfWhileCaWsdlOperationRequest"/>
+            <output name="output1" message="tns:IfWhileCaWsdlOperationResponse"/>
+        </operation>
+    </portType>
+    <plnk:partnerLinkType name="IfWhileCaWsdl">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="IfWhileCaWsdlPortTypeRole" portType="tns:IfWhileCaWsdlPortType"/>
+    </plnk:partnerLinkType>
+</definitions>
