@@ -1,0 +1,5 @@
+2 c
+Wychowawca: Anna Maria 1234
+Uczniowie:
+Kamil Wanat 2432
+Sylwia Kaleta 1234

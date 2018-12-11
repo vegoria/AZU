@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/Kamil/Desktop/test2.wsdl" uri="src/jbiasa/test2.wsdl"/>
+<nextCatalog catalog="src/jbiServiceUnits/META-INF/extservice2/catalog.xml"/>
+    <system systemId="file:/C:/Users/Kamil/Desktop/BPEL/HelloWorld/extservice2/src/newWSDL.wsdl" uri="src/jbiasa/newWSDL.wsdl"/>
+</catalog>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="extapp" xmlns:ns2="http://j2ee.netbeans.org/wsdl/extservice2/src/newWSDL" xmlns:ns3="http://ws.cdyne.com/" xmlns:ns4="http://enterprise.netbeans.org/bpel/extservice2/extservice2" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="casaPort1" interface-name="ns2:newWSDLPortType" name="endpoint1" service-name="ns1:extappService1"/>
+        <endpoint endpoint-name="casaPort2" interface-name="ns3:IP2GeoSoap" name="endpoint2" service-name="ns1:extappService2"/>
+        <endpoint display-name="PartnerLink1" endpoint-name="newWSDLPortTypeRole_myRole" file-path="extservice2.bpel" interface-name="ns2:newWSDLPortType" name="endpoint3" process-name="extservice2" service-name="ns4:PartnerLink1"/>
+        <endpoint display-name="PartnerLink2" endpoint-name="IP2GeoSoapRole_partnerRole" file-path="extservice2.bpel" interface-name="ns3:IP2GeoSoap" name="endpoint4" process-name="extservice2" service-name="ns4:PartnerLink2"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="extservice2.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="extapp-extservice2" unit-name="extservice2" unknown="false" x="148" y="274">
+            <provides endpoint="endpoint3"/>
+            <consumes endpoint="endpoint4"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="extapp-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port bindingType="soap" x="67" y="354">
+                    <link xlink:href="../jbiasa/extapp.wsdl#xpointer(/definitions/service[@name='extappService1']/port[@name='casaPort1'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+                <port bindingType="soap" x="67" y="470">
+                    <link xlink:href="../jbiasa/extapp.wsdl#xpointer(/definitions/service[@name='extappService2']/port[@name='casaPort2'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint1" mode="" provider="endpoint3" route-type="direct" routing-rule="" state="new"/>
+        <connection consumer="endpoint4" mode="" provider="endpoint2" route-type="direct" routing-rule="" state="new"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiasa/extapp.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extapp.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/newWSDL.wsdl#xpointer(/definitions/portType[@name='newWSDLPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/ws.cdyne.com/ip2geo/ip2geo.asmx.wsdl#xpointer(/definitions/portType[@name='IP2GeoSoap'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/ws.cdyne.com/ip2geo/ip2geo.asmx.wsdl#xpointer(/definitions/portType[@name='IP2GeoHttpGet'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/ws.cdyne.com/ip2geo/ip2geo.asmx.wsdl#xpointer(/definitions/portType[@name='IP2GeoHttpPost'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiasa/extapp.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiasa/extapp.wsdl#xpointer(/definitions/binding[@name='casaBinding2'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extapp.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extapp.wsdl#xpointer(/definitions/binding[@name='casaBinding2'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/ws.cdyne.com/ip2geo/ip2geo.asmx.wsdl#xpointer(/definitions/binding[@name='IP2GeoSoap'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/ws.cdyne.com/ip2geo/ip2geo.asmx.wsdl#xpointer(/definitions/binding[@name='IP2GeoSoap12'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/ws.cdyne.com/ip2geo/ip2geo.asmx.wsdl#xpointer(/definitions/binding[@name='IP2GeoHttpGet'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/ws.cdyne.com/ip2geo/ip2geo.asmx.wsdl#xpointer(/definitions/binding[@name='IP2GeoHttpPost'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiasa/extapp.wsdl#xpointer(/definitions/service[@name='extappService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiasa/extapp.wsdl#xpointer(/definitions/service[@name='extappService2'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extapp.wsdl#xpointer(/definitions/service[@name='extappService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extapp.wsdl#xpointer(/definitions/service[@name='extappService2'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/extservice2/ws.cdyne.com/ip2geo/ip2geo.asmx.wsdl#xpointer(/definitions/service[@name='IP2Geo'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>
