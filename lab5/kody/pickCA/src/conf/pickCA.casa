@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="pickCA" xmlns:ns2="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" xmlns:ns3="http://enterprise.netbeans.org/bpel/pickModule/pickModule" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="casaPort1" interface-name="ns2:pickModuleWsdlPortType" name="endpoint1" service-name="ns1:pickCAService1"/>
+        <endpoint display-name="PartnerLink1" endpoint-name="pickModuleWsdlPortTypeRole_myRole" file-path="pickModule.bpel" interface-name="ns2:pickModuleWsdlPortType" name="endpoint2" process-name="pickModule" service-name="ns3:PartnerLink1"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="pickModule.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="pickCA-pickModule" unit-name="pickModule" unknown="false" x="135" y="227">
+            <provides endpoint="endpoint2"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="pickCA-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port bindingType="soap" x="67" y="238">
+                    <link xlink:href="../jbiasa/pickCA.wsdl#xpointer(/definitions/service[@name='pickCAService1']/port[@name='casaPort1'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint1" mode="" provider="endpoint2" route-type="direct" routing-rule="" state="new"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiasa/pickCA.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/pickCA.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/pickModule/pickModuleWsdl.wsdl#xpointer(/definitions/portType[@name='pickModuleWsdlPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/pickModule/pickMsgOneWsdl.wsdl#xpointer(/definitions/portType[@name='pickMsgOneWsdlPortType'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiasa/pickCA.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/pickCA.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiasa/pickCA.wsdl#xpointer(/definitions/service[@name='pickCAService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/pickCA.wsdl#xpointer(/definitions/service[@name='pickCAService1'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

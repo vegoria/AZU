@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="pickModule"
+    targetNamespace="http://enterprise.netbeans.org/bpel/pickModule/pickModule"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/pickModule/pickModule"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+   <import namespace="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" location="pickModuleWsdl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <partnerLinks>
+      <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" partnerLinkType="tns:pickModuleWsdl" myRole="pickModuleWsdlPortTypeRole"/>
+   </partnerLinks>
+   <variables>
+      <variable name="SubstractOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" messageType="tns:operationResponse"/>
+      <variable name="AddOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" messageType="tns:operationResponse"/>
+      <variable name="SubstractOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" messageType="tns:operationRequest"/>
+      <variable name="AddOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" messageType="tns:operationRequest"/>
+   </variables>
+   <pick name="Pick1" createInstance="yes">
+      <onMessage partnerLink="PartnerLink1" operation="addOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" portType="tns:pickModuleWsdlPortType" variable="AddOperationIn">
+         <sequence name="Sequence1">
+            <assign name="Assign1">
+               <copy>
+                  <from>$AddOperationIn.numberOne + $AddOperationIn.numberTwo</from>
+                  <to variable="AddOperationOut" part="result"/>
+               </copy>
+            </assign>
+            <reply name="Reply1" partnerLink="PartnerLink1" operation="addOperation" portType="tns:pickModuleWsdlPortType" variable="AddOperationOut"/>
+         </sequence>
+      </onMessage>
+      <onMessage partnerLink="PartnerLink1" operation="substractOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/pickModule/src/pickModuleWsdl" portType="tns:pickModuleWsdlPortType" variable="SubstractOperationIn">
+         <sequence name="Sequence2">
+            <assign name="Assign2">
+               <copy>
+                  <from>$SubstractOperationIn.numberOne - $SubstractOperationIn.numberTwo</from>
+                  <to variable="SubstractOperationOut" part="result"/>
+               </copy>
+            </assign>
+            <reply name="Reply2" partnerLink="PartnerLink1" operation="substractOperation" portType="tns:pickModuleWsdlPortType" variable="SubstractOperationOut"/>
+         </sequence>
+      </onMessage>
+   </pick>
+</process>
