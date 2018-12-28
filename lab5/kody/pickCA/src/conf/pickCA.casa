@@ -25,7 +25,6 @@
         <link xlink:href="../jbiasa/pickCA.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
         <link xlink:href="../jbiServiceUnits/pickCA.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
         <link xlink:href="../jbiServiceUnits/pickModule/pickModuleWsdl.wsdl#xpointer(/definitions/portType[@name='pickModuleWsdlPortType'])" xlink:type="simple"/>
-        <link xlink:href="../jbiServiceUnits/pickModule/pickMsgOneWsdl.wsdl#xpointer(/definitions/portType[@name='pickMsgOneWsdlPortType'])" xlink:type="simple"/>
     </porttypes>
     <bindings>
         <link xlink:href="../jbiasa/pickCA.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>

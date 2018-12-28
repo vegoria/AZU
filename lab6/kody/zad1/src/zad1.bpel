@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="zad1"
+    targetNamespace="http://enterprise.netbeans.org/bpel/zad1/zad1"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/zad1/zad1"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://j2ee.netbeans.org/wsdl/zad1/src/zad1">
+    <import namespace="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" location="zad1.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" partnerLinkType="tns:zad1" myRole="zad1PortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="Fault1FaultVar" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" messageType="tns:zad1OperationFault"/>
+        <variable name="Zad1OperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" messageType="tns:zad1OperationResponse"/>
+        <variable name="Zad1OperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" messageType="tns:zad1OperationRequest"/>
+    </variables>
+    <faultHandlers>
+        <catch faultName="ns0:fault1">
+            <sequence name="Sequence3">
+                <assign name="Assign4">
+                    <copy>
+                            <from>'false'</from>
+                                <to variable="Fault1FaultVar" part="part1"/>
+                        </copy>
+                </assign>
+                <reply name="Reply2" partnerLink="PartnerLink1" operation="zad1Operation" portType="ns0:zad1PortType" faultName="tns:fault1" variable="Fault1FaultVar"/>
+            </sequence>
+        </catch>
+    </faultHandlers>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink1" operation="zad1Operation" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" portType="tns:zad1PortType" variable="Zad1OperationIn"/>
+        <if name="If1">
+            <condition>$Zad1OperationIn.part1 &gt;= 5</condition>
+            <sequence name="Sequence1">
+                <assign name="Assign2">
+                    <copy>
+                        <from>'true'</from>
+                        <to variable="Zad1OperationOut" part="part1"/>
+                    </copy>
+                </assign>
+                <reply name="Reply1" partnerLink="PartnerLink1" operation="zad1Operation" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" portType="tns:zad1PortType" variable="Zad1OperationOut"/>
+            </sequence>
+            <else>
+                <sequence name="Sequence2">
+                    <throw name="Throw1" faultName="ns0:fault1"/>
+                </sequence>
+            </else>
+        </if>
+    </sequence>
+</process>

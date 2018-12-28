@@ -2,7 +2,7 @@
 <casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="flowCA" xmlns:ns2="http://j2ee.netbeans.org/wsdl/flowModule/src/flowWsdl" xmlns:ns3="http://enterprise.netbeans.org/bpel/flowModule/flowModule" xmlns:xlink="http://www.w3.org/2000/xlink">
     <endpoints>
         <endpoint endpoint-name="casaPort1" interface-name="ns2:flowWsdlPortType" name="endpoint1" service-name="ns1:flowCAService1"/>
-        <endpoint display-name="PartnerLink1" name="endpoint2" file-path="flowModule.bpel" endpoint-name="flowWsdlPortTypeRole_myRole" interface-name="ns2:flowWsdlPortType" process-name="flowModule" service-name="ns3:PartnerLink1"/>
+        <endpoint display-name="PartnerLink1" endpoint-name="flowWsdlPortTypeRole_myRole" file-path="flowModule.bpel" interface-name="ns2:flowWsdlPortType" name="endpoint2" process-name="flowModule" service-name="ns3:PartnerLink1"/>
     </endpoints>
     <service-units>
         <service-engine-service-unit artifacts-zip="flowModule.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="flowCA-flowModule" unit-name="flowModule" unknown="false" x="148" y="267">
@@ -19,7 +19,7 @@
         </binding-component-service-unit>
     </service-units>
     <connections>
-        <connection state="new" mode="" consumer="endpoint1" provider="endpoint2" routing-rule="" route-type="direct"/>
+        <connection consumer="endpoint1" mode="" provider="endpoint2" route-type="direct" routing-rule="" state="new"/>
     </connections>
     <porttypes>
         <link xlink:href="../jbiasa/flowCA.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
