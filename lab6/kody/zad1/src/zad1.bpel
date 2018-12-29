@@ -19,23 +19,10 @@
         <variable name="Zad1OperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" messageType="tns:zad1OperationResponse"/>
         <variable name="Zad1OperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" messageType="tns:zad1OperationRequest"/>
     </variables>
-    <faultHandlers>
-        <catch faultName="ns0:fault1">
-            <sequence name="Sequence3">
-                <assign name="Assign4">
-                    <copy>
-                            <from>'false'</from>
-                                <to variable="Fault1FaultVar" part="part1"/>
-                        </copy>
-                </assign>
-                <reply name="Reply2" partnerLink="PartnerLink1" operation="zad1Operation" portType="ns0:zad1PortType" faultName="tns:fault1" variable="Fault1FaultVar"/>
-            </sequence>
-        </catch>
-    </faultHandlers>
     <sequence>
         <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink1" operation="zad1Operation" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad1/src/zad1" portType="tns:zad1PortType" variable="Zad1OperationIn"/>
         <if name="If1">
-            <condition>$Zad1OperationIn.part1 &gt;= 5</condition>
+            <condition>$Zad1OperationIn.part1 &gt;= 0</condition>
             <sequence name="Sequence1">
                 <assign name="Assign2">
                     <copy>
@@ -47,7 +34,13 @@
             </sequence>
             <else>
                 <sequence name="Sequence2">
-                    <throw name="Throw1" faultName="ns0:fault1"/>
+                    <assign name="Assign3">
+                        <copy>
+                            <from>'false'</from>
+                            <to variable="Fault1FaultVar" part="part1"/>
+                        </copy>
+                    </assign>
+                    <reply name="Reply2" partnerLink="PartnerLink1" operation="zad1Operation" portType="ns0:zad1PortType" faultName="ns0:fault1" variable="Fault1FaultVar"/>
                 </sequence>
             </else>
         </if>
