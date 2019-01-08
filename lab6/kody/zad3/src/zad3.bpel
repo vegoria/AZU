@@ -20,44 +20,49 @@
     </variables>
     <sequence>
         <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink1" operation="newWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad3/src/newWSDL" portType="tns:newWSDLPortType" variable="NewWSDLOperationIn"/>
-        <if name="If1">
-            <condition>$NewWSDLOperationIn.part2 = 0</condition>
-            <sequence name="Sequence3">
-                <scope name="Scope2">
+        <scope name="Scope3">
+            <sequence name="Sequence8">
+                <scope name="Scope4">
                     <faultHandlers>
                         <catchAll>
-                            <sequence name="Sequence7">
-                                <compensate name="Compensate2"/>
-                                <reply name="Reply2" partnerLink="PartnerLink1" operation="newWSDLOperation" portType="ns0:newWSDLPortType" variable="NewWSDLOperationOut"/>
+                            <sequence name="Sequence11">
+                                <compensateScope name="CompensateScope1" target="Scope2"/>
+                                <reply name="Reply3" partnerLink="PartnerLink1" operation="newWSDLOperation" portType="ns0:newWSDLPortType" variable="NewWSDLOperationOut"/>
                             </sequence>
                         </catchAll>
                     </faultHandlers>
-                    <compensationHandler>
-                        <sequence name="Sequence6">
-                            <assign name="Assign2">
-                                <copy>
-                                        <from variable="NewWSDLOperationIn" part="part1"/>
-                                            <to variable="NewWSDLOperationOut" part="part1"/>
-                                    </copy>
-                            </assign>
-                        </sequence>
-                    </compensationHandler>
-                    <sequence name="Sequence4">
-                        <throw name="Throw1" faultName="ns0:fault1"/>
+                    <sequence name="Sequence10">
+                        <if name="If1">
+                            <condition>$NewWSDLOperationIn.part2 = 0</condition>
+                                <sequence name="Sequence3">
+                                <scope name="Scope2">
+                                    <compensationHandler>
+                                        <assign name="Assign3">
+                                            <copy>
+                                                <from>0</from>
+                                                <to variable="NewWSDLOperationOut" part="part1"/>
+                                            </copy>
+                                        </assign>
+                                    </compensationHandler>
+                                    <validate name="Validate1" variables="NewWSDLOperationIn"/>
+                                </scope>
+                                    <throw name="Throw1" faultName="sxeh:systemFault"/>
+                                </sequence>
+                                <else>
+                                <sequence name="Sequence1">
+                                        <assign name="Assign1">
+                                                <copy>
+                                                        <from>$NewWSDLOperationIn.part1 div $NewWSDLOperationIn.part2</from>
+                                                            <to variable="NewWSDLOperationOut" part="part1"/>
+                                                    </copy>
+                                            </assign>
+                                    <reply name="Reply2" partnerLink="PartnerLink1" operation="newWSDLOperation" portType="ns0:newWSDLPortType" variable="NewWSDLOperationOut"/>
+                                </sequence>
+                            </else>
+                        </if>
                     </sequence>
                 </scope>
             </sequence>
-            <else>
-                <sequence name="Sequence1">
-                    <assign name="Assign1">
-                        <copy>
-                            <from>$NewWSDLOperationIn.part1 div $NewWSDLOperationIn.part2</from>
-                            <to variable="NewWSDLOperationOut" part="part1"/>
-                        </copy>
-                    </assign>
-                    <reply name="Reply1" partnerLink="PartnerLink1" operation="newWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/zad3/src/newWSDL" portType="tns:newWSDLPortType" variable="NewWSDLOperationOut"/>
-                </sequence>
-            </else>
-        </if>
+        </scope>
     </sequence>
 </process>
